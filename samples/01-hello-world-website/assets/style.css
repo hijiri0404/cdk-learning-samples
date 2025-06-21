@@ -1,0 +1,200 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: white;
+}
+
+header h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* Main Content */
+main {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+section {
+    margin-bottom: 2.5rem;
+}
+
+h2 {
+    color: #5a67d8;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+h3 {
+    color: #4a5568;
+    margin-bottom: 0.5rem;
+}
+
+/* Welcome Section */
+.welcome p {
+    font-size: 1.1rem;
+    color: #4a5568;
+    line-height: 1.8;
+}
+
+/* Tech Stack Cards */
+.tech-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.card {
+    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 4px solid #5a67d8;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+}
+
+.card p {
+    color: #4a5568;
+    font-size: 0.95rem;
+}
+
+/* Next Steps */
+.next-steps ol {
+    padding-left: 1.5rem;
+}
+
+.next-steps li {
+    margin-bottom: 0.8rem;
+    font-size: 1.05rem;
+    color: #4a5568;
+}
+
+/* Info Section */
+.info ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.info li {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #f7fafc;
+    border-radius: 8px;
+    border-left: 3px solid #38a169;
+}
+
+.info strong {
+    color: #2d3748;
+    display: inline-block;
+    margin-bottom: 0.3rem;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    color: white;
+    padding: 2rem 0;
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+}
+
+.timestamp {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    header h1 {
+        font-size: 2.2rem;
+    }
+    
+    main {
+        padding: 1.5rem;
+    }
+    
+    .tech-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container > * {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Success Badge */
+.welcome::before {
+    content: "✅ デプロイ成功";
+    display: inline-block;
+    background: #38a169;
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}

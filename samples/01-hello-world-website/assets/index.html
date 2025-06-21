@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World - CDK入門</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎉 Hello World!</h1>
+            <p class="subtitle">AWS CDK で作った最初のウェブサイト</p>
+        </header>
+        
+        <main>
+            <section class="welcome">
+                <h2>🚀 おめでとうございます！</h2>
+                <p>
+                    このウェブサイトは、AWS CDK（Cloud Development Kit）を使って作成されました。
+                    TypeScriptで書いたコードが、実際のAWSインフラストラクチャに変換されています。
+                </p>
+            </section>
+            
+            <section class="tech-stack">
+                <h2>🛠️ 使用技術</h2>
+                <div class="tech-cards">
+                    <div class="card">
+                        <h3>📦 Amazon S3</h3>
+                        <p>ウェブサイトファイルの保存</p>
+                    </div>
+                    <div class="card">
+                        <h3>🌐 CloudFront</h3>
+                        <p>世界中への高速配信（CDN）</p>
+                    </div>
+                    <div class="card">
+                        <h3>⚙️ AWS CDK</h3>
+                        <p>インフラをコードで管理</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="next-steps">
+                <h2>📚 次のステップ</h2>
+                <ol>
+                    <li>このウェブサイトのHTML/CSSを編集してみる</li>
+                    <li>CDKコードのコメントを読んでTypeScriptを理解する</li>
+                    <li>Sample 02（API Server）に挑戦する</li>
+                </ol>
+            </section>
+            
+            <section class="info">
+                <h2>💡 学習ポイント</h2>
+                <ul>
+                    <li><strong>S3静的ウェブサイト</strong>: HTMLファイルを置くだけでウェブサイト公開</li>
+                    <li><strong>CloudFront</strong>: 世界中のユーザーに高速でコンテンツ配信</li>
+                    <li><strong>CDK</strong>: インフラをコードで管理（Infrastructure as Code）</li>
+                    <li><strong>TypeScript</strong>: 型安全なJavaScript、IDEの支援が強力</li>
+                </ul>
+            </section>
+        </main>
+        
+        <footer>
+            <p>Powered by AWS CDK 💙 TypeScript</p>
+            <p class="timestamp">デプロイ日時: <span id="deploy-time"></span></p>
+        </footer>
+    </div>
+    
+    <script>
+        // 現在の日時を表示
+        document.getElementById('deploy-time').textContent = new Date().toLocaleString('ja-JP');
+    </script>
+</body>
+</html>
