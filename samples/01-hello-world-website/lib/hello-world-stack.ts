@@ -82,8 +82,8 @@ export class HelloWorldStack extends cdk.Stack {
       // デフォルトの動作設定
       defaultBehavior: {
         // 📚 TypeScript学習ポイント: クラスの静的メソッド呼び出し
-        // origins.S3Origin.fromBucket() は「S3バケットをオリジンとして設定」
-        origin: origins.S3Origin.fromBucket(websiteBucket),
+        // origins.S3BucketOrigin.withOriginAccessControl() は「S3バケットをオリジンとして設定」
+        origin: origins.S3BucketOrigin.withOriginAccessControl(websiteBucket),
         
         // キャッシュポリシー（どのくらいキャッシュするか）
         cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,

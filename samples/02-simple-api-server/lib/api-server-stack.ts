@@ -56,9 +56,9 @@ export class ApiServerStack extends cdk.Stack {
       },
       
       // 📚 AWS学習ポイント: 課金モード
-      // ON_DEMAND = 使った分だけ課金（小規模アプリに最適）
+      // PAY_PER_REQUEST = 使った分だけ課金（小規模アプリに最適）
       // PROVISIONED = 事前にキャパシティを指定
-      billingMode: dynamodb.BillingMode.ON_DEMAND,
+      billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       
       // 学習用設定: スタック削除時にテーブルも削除
       removalPolicy: cdk.RemovalPolicy.DESTROY,
@@ -109,13 +109,6 @@ export class ApiServerStack extends cdk.Stack {
       deployOptions: {
         // ステージ名（URL内に含まれる）
         stageName: environment,
-        
-        // 📚 AWS学習ポイント: スロットリング設定
-        // APIの呼び出し制限
-        throttle: {
-          rateLimit: 100,    // 1秒あたりのリクエスト数
-          burstLimit: 200,   // バーストリクエスト数
-        },
       },
       
       // 📚 TypeScript学習ポイント: 条件分岐演算子

@@ -9,6 +9,7 @@ import { S3Stack } from '../lib/s3-stack';
 import { LambdaStack } from '../lib/lambda-stack';
 import { VpcStack } from '../lib/vpc-stack';
 import { ApiGatewayStack } from '../lib/api-gateway-stack';
+import { HelloWorldStack } from '../samples/01-hello-world-website/lib/hello-world-stack';
 
 // TypeScript: constは定数（変更できない値）を宣言します
 // new演算子でクラスのインスタンス（実体）を作成します
@@ -39,6 +40,13 @@ new VpcStack(app, 'VpcStack', {
 
 // API Gatewayのスタック
 new ApiGatewayStack(app, 'ApiGatewayStack', {
+  env: commonEnv,
+});
+
+// Sample 01: Hello World Website
+new HelloWorldStack(app, 'HelloWorldStack', {
+  websiteName: 'my-first-site',
+  environment: 'dev',
   env: commonEnv,
 });
 
