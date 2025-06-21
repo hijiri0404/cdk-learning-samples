@@ -1174,4 +1174,312 @@ export class MyStack extends cdk.Stack {  // ← クラス継承
 
 ---
 
+---
+
+## 📦 npm install の詳細解説
+
+### Q12: `npm install` は何をしているの？
+
+**A12: プロジェクトに必要なライブラリ（依存関係）を自動ダウンロード・インストールするコマンド**
+
+## 🎯 npm install の基本概念
+
+### 📚 TypeScript/Node.js学習ポイント
+
+**npm** = Node Package Manager（Node.jsのパッケージ管理ツール）
+- Node.jsアプリケーションで使用するライブラリを管理
+- 世界中の開発者が作ったコードを簡単に利用可能
+- TypeScript、React、AWS CDKなども全てnpmパッケージ
+
+## 🔍 実行時に何が起こるか
+
+### 1. package.json ファイルを読み込み
+```json
+{
+  "name": "cdk-learning-samples",
+  "dependencies": {
+    "aws-cdk-lib": "2.100.0",        // AWS CDKライブラリ
+    "constructs": "^10.0.0",         // CDK基盤ライブラリ
+    "typescript": "~5.2.2"           // TypeScriptコンパイラ
+  },
+  "devDependencies": {
+    "@types/node": "20.6.8",         // Node.jsの型定義
+    "jest": "^29.7.0"                // テストフレームワーク
+  }
+}
+```
+
+### 2. 指定されたパッケージをダウンロード
+```bash
+# 📥 npmレジストリからダウンロード
+aws-cdk-lib@2.100.0 をダウンロード中...
+constructs@10.3.0 をダウンロード中...
+typescript@5.2.2 をダウンロード中...
+```
+
+### 3. node_modules フォルダに保存
+```
+プロジェクト/
+├── package.json           # 📋 必要なライブラリのリスト
+├── package-lock.json      # 🔒 正確なバージョン記録
+└── node_modules/          # 📦 ダウンロードされたライブラリ群
+    ├── aws-cdk-lib/      # AWS CDKのコード
+    ├── constructs/       # CDK基盤のコード
+    ├── typescript/       # TypeScriptコンパイラ
+    └── (その他数百個のライブラリ)
+```
+
+## 🌐 CDKプロジェクトでの具体例
+
+### CDKプロジェクトの package.json
+```json
+{
+  "name": "cdk-learning-samples",
+  "version": "0.1.0",
+  "bin": {
+    "cdk-learning-samples": "bin/cdk-learning-samples.js"
+  },
+  "scripts": {
+    "build": "tsc",                    // TypeScriptコンパイル
+    "watch": "tsc -w",                 // ファイル変更を監視
+    "test": "jest",                    // テスト実行
+    "cdk": "cdk"                       // CDK コマンド
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.100.0",         // 🎯 AWS CDKのメインライブラリ
+    "constructs": "^10.0.0"            // 🎯 CDKの基盤クラス
+  },
+  "devDependencies": {
+    "@types/jest": "^29.4.0",          // Jestテストの型定義
+    "@types/node": "20.6.8",           // Node.jsの型定義
+    "jest": "^29.7.0",                 // テストフレームワーク
+    "ts-jest": "^29.1.0",              // TypeScript用Jest設定
+    "typescript": "~5.2.2"             // TypeScriptコンパイラ
+  }
+}
+```
+
+### 📥 npm install 実行時の詳細な流れ
+
+```bash
+$ npm install
+
+# 1. 📋 package.json を解析
+npm WARN deprecated inflight@1.0.6: This module is not supported
+npm WARN deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+
+# 2. 🔍 依存関係を解決
+npm http fetch GET 200 https://registry.npmjs.org/aws-cdk-lib/-/aws-cdk-lib-2.100.0.tgz
+npm http fetch GET 200 https://registry.npmjs.org/constructs/-/constructs-10.3.0.tgz
+
+# 3. 📦 パッケージをダウンロード・展開
+added 347 packages, and audited 348 packages in 23s
+
+# 4. ✅ 完了報告
+found 0 vulnerabilities
+```
+
+## 🔄 バージョン管理の仕組み
+
+### セマンティックバージョニング
+```json
+{
+  "dependencies": {
+    "aws-cdk-lib": "2.100.0",    // 📌 固定バージョン（推奨）
+    "constructs": "^10.0.0",     // 🔄 マイナーアップデート許可
+    "some-package": "~1.2.3"     // 🔧 パッチアップデートのみ許可
+  }
+}
+```
+
+**バージョン指定の意味：**
+- `2.100.0` = きっかり このバージョンのみ
+- `^10.0.0` = 10.0.0以上、11.0.0未満（10.1.0, 10.5.2等はOK）
+- `~1.2.3` = 1.2.3以上、1.3.0未満（1.2.4, 1.2.9等はOK）
+
+### package-lock.json の役割
+```json
+{
+  "name": "cdk-learning-samples",
+  "lockfileVersion": 3,
+  "packages": {
+    "node_modules/aws-cdk-lib": {
+      "version": "2.100.0",           // 📌 実際にインストールされたバージョン
+      "resolved": "https://registry.npmjs.org/aws-cdk-lib/-/aws-cdk-lib-2.100.0.tgz",
+      "integrity": "sha512-...",      // 🔒 ファイルの整合性チェック用ハッシュ
+      "dependencies": {
+        "constructs": "^10.0.0"       // 📋 この パッケージが依存する他のパッケージ
+      }
+    }
+  }
+}
+```
+
+## 🎯 dependencies vs devDependencies
+
+### dependencies（本番環境でも必要）
+```typescript
+// 実際のアプリケーションコードで使用
+import * as cdk from 'aws-cdk-lib';          // 本番環境でも必要
+import { Construct } from 'constructs';      // 本番環境でも必要
+
+export class MyStack extends cdk.Stack {
+  // このコードは本番環境でも動く必要がある
+}
+```
+
+### devDependencies（開発時のみ必要）
+```typescript
+// テストコードや開発ツールで使用
+import { Template } from 'aws-cdk-lib/assertions';  // テスト時のみ使用
+import * as MyStack from '../lib/my-stack';          // テスト時のみ使用
+
+test('スタックが正しく作成される', () => {
+  // テストコード（本番環境では実行されない）
+});
+```
+
+## 🔧 よく使用するnpmコマンド
+
+### 基本的なコマンド
+```bash
+# 📦 全ての依存関係をインストール
+npm install
+
+# 📦 特定のパッケージを追加
+npm install express              # dependenciesに追加
+npm install --save-dev @types/express  # devDependenciesに追加
+
+# 🔄 パッケージを最新バージョンに更新
+npm update
+
+# 🗑️ 特定のパッケージを削除
+npm uninstall express
+
+# 📋 インストール済みパッケージの一覧表示
+npm list
+
+# 🔍 パッケージの詳細情報を表示
+npm info aws-cdk-lib
+```
+
+### CDKプロジェクトでよく使うコマンド
+```bash
+# 🏗️ TypeScriptコンパイル
+npm run build
+
+# 👀 ファイル変更を監視して自動コンパイル
+npm run watch
+
+# 🧪 テスト実行
+npm run test
+
+# 🚀 CDKコマンド実行
+npm run cdk -- deploy MyStack    # cdk deploy MyStack と同じ
+```
+
+## ❗ よくあるエラーと対処法
+
+### 1. EACCES権限エラー
+```bash
+# ❌ エラー
+npm ERR! Error: EACCES: permission denied
+
+# ✅ 解決方法
+sudo npm install                 # 管理者権限で実行（推奨しない）
+# または
+npm config set prefix ~/.npm     # ユーザーディレクトリに変更（推奨）
+```
+
+### 2. node_modules が巨大になる
+```bash
+# 📊 サイズ確認
+du -sh node_modules/
+# 例: 250MB
+
+# 🧹 クリーンアップ
+rm -rf node_modules/
+npm install                      # 再インストール
+
+# 💡 なぜ巨大？
+# - aws-cdk-lib だけで数十MB
+# - 依存関係の依存関係も全てダウンロード
+# - TypeScript、テストツール等も含む
+```
+
+### 3. バージョン競合
+```bash
+# ❌ エラー
+npm ERR! peer dep missing: typescript@>=4.9.0
+
+# ✅ 解決方法
+npm install typescript@5.2.2     # 要求されたバージョンをインストール
+```
+
+## 🎯 CDKプロジェクトでの実践的な使い方
+
+### 新しいAWSサービスを追加する場合
+```bash
+# 例: DynamoDBを使いたい場合
+npm install aws-cdk-lib           # 既にインストール済みなので不要
+
+# TypeScriptコードで使用
+import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
+```
+
+### 新しいライブラリを追加する場合
+```bash
+# 例: UUID生成ライブラリ
+npm install uuid
+npm install --save-dev @types/uuid  # TypeScript型定義
+
+# TypeScriptコードで使用
+import { v4 as uuidv4 } from 'uuid';
+const id = uuidv4();  // 一意なID生成
+```
+
+## 💡 最適化のコツ
+
+### 1. .npmrc ファイルで設定最適化
+```bash
+# .npmrc ファイル作成
+registry=https://registry.npmjs.org/
+save-exact=true              # 固定バージョンで保存
+progress=false               # プログレスバー非表示（CI環境用）
+```
+
+### 2. キャッシュ活用
+```bash
+# キャッシュ確認
+npm cache verify
+
+# キャッシュクリア（問題がある場合）
+npm cache clean --force
+```
+
+### 3. package-lock.json は必ずコミット
+```bash
+# Git管理に含める（重要）
+git add package-lock.json
+git commit -m "Update dependencies"
+
+# チーム全員が同じバージョンを使用可能
+```
+
+## 📚 学習のポイント
+
+**理解すべき概念：**
+1. **パッケージ管理**: ライブラリの自動管理
+2. **依存関係**: ライブラリ間の相互関係
+3. **バージョン管理**: セマンティックバージョニング
+4. **本番 vs 開発**: dependencies vs devDependencies
+
+**実践で覚えること：**
+- `npm install` は最初に一回実行すればOK
+- 新しいライブラリが必要な時だけ追加インストール
+- エラーが出たら `rm -rf node_modules && npm install` で再インストール
+- package.json を見れば何のライブラリを使っているかが分かる
+
+---
+
 この質問リストは学習の進行に合わせて更新していきます。他に疑問があれば、いつでも追加してください！
