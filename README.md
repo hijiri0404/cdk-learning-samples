@@ -1,35 +1,35 @@
 # AWS CDK 学習用サンプルプロジェクト
 
-このプロジェクトは、AWS CDK（Cloud Development Kit）を学習するためのサンプルコードです。TypeScriptで書かれており、基本的なAWSリソースの作成方法を学べます。
+このプロジェクトは、AWS CDK（Cloud Development Kit）を初心者から上級者まで段階的に学習できる包括的なサンプル集です。TypeScriptとAWSの基本から実践的なエンタープライズアプリケーション構築まで、体系的に学習できます。
 
-## 📋 含まれるスタック
+## 🎯 プロジェクト構成
 
-### 1. S3Stack (lib/s3-stack.ts)
-- 基本的なS3バケット
-- 静的ウェブサイトホスティング用バケット
-- バージョニング有効なバケット
-- 暗号化されたバケット
-- ライフサイクルポリシー付きバケット
+### 📚 基礎学習用スタック (lib/)
+CDKの基本概念とTypeScriptの基礎を学ぶための4つのスタック：
 
-### 2. LambdaStack (lib/lambda-stack.ts)
-- Python Lambda関数
-- Node.js Lambda関数
-- 定期実行Lambda関数（CloudWatch Events）
-- IAMロールと権限の設定
+- **S3Stack**: 基本的なリソース作成とCDKの基礎
+- **LambdaStack**: サーバーレス関数とイベント処理
+- **VpcStack**: ネットワーク設計と3層アーキテクチャ
+- **ApiGatewayStack**: API作成とサービス統合
 
-### 3. VpcStack (lib/vpc-stack.ts)
-- VPC（Virtual Private Cloud）
-- パブリック・プライベート・分離サブネット
-- セキュリティグループ（3層アーキテクチャ用）
-- VPCエンドポイント（S3, DynamoDB）
-- NATゲートウェイ
+### 🚀 実践学習用サンプル (samples/)
+レベル別に構成された10個の実践的なサンプルアプリケーション：
 
-### 4. ApiGatewayStack (lib/api-gateway-stack.ts)
-- REST API Gateway
-- Lambda統合
-- モック統合
-- API Key と Usage Plan
-- CORS設定
+#### 🌱 レベル1: 基礎編 (samples/01-03)
+- **01-hello-world-website**: S3 + CloudFront静的サイト
+- **02-simple-api-server**: Lambda + API Gateway + DynamoDB
+- **03-file-upload-system**: S3イベント + Lambda処理
+
+#### 🌿 レベル2: 応用編 (samples/04-06)
+- **04-blog-backend**: RDS PostgreSQL + VPC + セキュリティ
+- **05-image-resize**: 画像処理 + Lambda Layers + SQS
+- **06-monitoring**: CloudWatch + SNS + カスタムメトリクス
+
+#### 🌳 レベル3: 実践編 (samples/07-10)
+- **07-multi-environment**: 環境別設定管理 + GitOps
+- **08-fullstack-todo**: React + Cognito + フルスタック
+- **09-cicd-pipeline**: CodePipeline + 自動テスト + Docker
+- **10-enterprise-security**: WAF + VPC + ゼロトラスト
 
 ## 🚀 セットアップ
 
@@ -96,29 +96,45 @@ npm run destroy
 cdk destroy S3Stack
 ```
 
-## 🎯 学習ポイント
+## 🎯 学習ガイド
 
-### 基本概念
-- **App**: CDKアプリケーションのルート
-- **Stack**: AWSリソースの論理的なグループ
-- **Construct**: 再利用可能なクラウドコンポーネント
+### 📚 推奨学習パス
 
-### CDKの特徴
-- **Infrastructure as Code**: インフラをコードで管理
-- **型安全性**: TypeScriptによる型チェック
-- **再利用性**: コンストラクトライブラリの活用
-- **テスト可能**: ユニットテストの実装
-
-### スタック間の依存関係
-```typescript
-// 他のスタックからVPCを参照する例
-import { VpcStack } from './vpc-stack';
-
-const vpcStack = new VpcStack(app, 'VpcStack');
-const appStack = new AppStack(app, 'AppStack', {
-  vpc: vpcStack.vpc  // VPCを他のスタックで使用
-});
+#### 1️⃣ 基礎習得 (lib/)
+まずは基本スタックでCDKの基礎を学習：
+```bash
+# 基本概念の習得
+cdk deploy S3Stack      # リソース作成の基本
+cdk deploy LambdaStack  # サーバーレス関数
+cdk deploy VpcStack     # ネットワーク設計
+cdk deploy ApiGatewayStack # API作成
 ```
+
+#### 2️⃣ 実践学習 (samples/)
+レベル別に段階的にスキルアップ：
+
+**🌱 レベル1: 基礎編 (必須)**
+- `samples/01-hello-world-website`: CDK + TypeScript基礎
+- `samples/02-simple-api-server`: サーバーレス API
+- `samples/03-file-upload-system`: イベント駆動処理
+
+**🌿 レベル2: 応用編 (推奨)**
+- `samples/04-blog-backend`: データベース連携
+- `samples/05-image-resize`: 高度なファイル処理
+- `samples/06-monitoring`: 運用・監視の実践
+
+**🌳 レベル3: 実践編 (上級者向け)**
+- `samples/07-multi-environment`: 環境管理
+- `samples/08-fullstack-todo`: フルスタック開発
+- `samples/09-cicd-pipeline`: DevOps実践
+- `samples/10-enterprise-security`: エンタープライズ対応
+
+### 💡 学習のコツ
+
+- **1行ごとのコメントを活用**: TypeScriptとAWSの学習ポイントが明記
+- **段階的デプロイ**: 各サンプルで実際にリソースを作成・確認・削除
+- **コスト管理**: 各サンプルのコスト見積もりを事前確認
+- **カスタマイズ実践**: 理解度確認のため設定変更に挑戦
 
 ## 🔧 カスタマイズ方法
 
